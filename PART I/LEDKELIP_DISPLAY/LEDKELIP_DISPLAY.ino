@@ -9,11 +9,11 @@ int LED = 27;
 TFT_eSPI tft = TFT_eSPI();  // Invoke custom library
 
 void setup(void) {
-  Serial.begin(115200);
-  tft.init();
-  tft.invertDisplay(true);
-  tft.setRotation(1);
-  tft.fillScreen(TFT_BLACK);
+  Serial.begin(115200);   // Set baudrate
+  tft.init();              //initialize TFT display
+  tft.invertDisplay(true); // activate display in invert
+  tft.setRotation(0);       // Set rotation
+  tft.fillScreen(TFT_BLACK); // Fill the initial display screen black
  // Define pin #26 as input and activate the internal pull-up resistor
   pinMode(buttonPin, INPUT_PULLUP);
  // Define pin #27 as output, for the LED
@@ -23,30 +23,28 @@ void setup(void) {
 void loop() {
 
  
-tft.fillScreen(TFT_BLACK);
-tft.setTextSize(3);
-tft.setCursor(0, 0);
+tft.fillScreen(TFT_BLACK); // black screen fill 
+tft.setTextSize(3);        // set text size
+tft.setCursor(0, 0);      //Set text initial coordianate
 
 // Read the value of the input. It can either be 1 or 0
 int buttonValue = digitalRead(buttonPin);
   if (buttonValue == LOW){
-      // If button pushed, turn LED on
-  digitalWrite(LED, HIGH);   // turn the LED on (HIGH is the voltage level)
-  tft.setCursor(0, 0);
-  tft.setTextColor(TFT_RED, TFT_BLACK);
-  tft.println("LED ON");
-  delay(1000);                       // wait for a second
-  digitalWrite(LED, LOW);    // turn the LED off by making the voltage LOW
-  tft.setCursor(0, 0);
-  tft.setTextColor(TFT_RED, TFT_BLACK);
-  tft.println("LED OFF");
-  delay(1000);                       // wait for a second
+      // If button pushed, Blinking LED
+  digitalWrite(LED, HIGH);                       // turn the LED on (HIGH is the voltage level)
+  tft.setTextColor(TFT_GREEN, TFT_BLACK);         //Set text colour text: GREEN background text: black
+  tft.println("LED ON");                        // Display LED ON when LED is On
+  delay(1000);                                  // wait for a second
+  digitalWrite(LED, LOW);                       // turn the LED off by making the voltage LOW                         
+  tft.setTextColor(TFT_YELLOW, TFT_BLACK);         //Set text colour text: YELLOW background text: black
+  tft.println("LED OFF");                       // Display LED OFF when LED is Off 
+  delay(1000);                                   // wait for a second
    } else {
-      // Otherwise, turn the LED off
-      digitalWrite(LED, LOW);
-      tft.setTextColor(TFT_RED, TFT_BLACK);
-      tft.println("OFF BLINK");
-      delay(1000);
+      // Otherwise, turn the LED off or button not press
+      digitalWrite(LED, LOW);                   // turn the LED off by making the voltage LOW
+      tft.setTextColor(TFT_RED, TFT_BLACK);     //Set text colour text: red background text: black
+      tft.println("OFF BLINK");                 // Display LED OFF when LED is Off
+      delay(1000);                              // wait for a second
    }
 
 }
